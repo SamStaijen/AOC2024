@@ -33,7 +33,7 @@ main = do
 
 --methods will not be made properly, just functioning einough given the assumptions
 dayOnePartOne :: [Char] -> Int
-dayOnePartOne fileContent = sum (map delta $ toSortedTuples (sortLsts (splLst (words fileContent))))
+dayOnePartOne fileContent = sum (map delta $ toTuples (sortLsts (splLst (words fileContent))))
 
 splLst :: [String] -> ([Int],[Int])
 splLst [] = ([], [])
@@ -42,9 +42,9 @@ splLst (x:y:xs) = (read x : xs1, read y : xs2)
   where
     (xs1, xs2) = splLst xs
 
-toSortedTuples :: ([Int],[Int]) -> [(Int,Int)]
-toSortedTuples ([],[]) = []
-toSortedTuples ((x:xs), (y:ys)) = (x,y) : toSortedTuples (xs,ys)
+toTuples :: ([Int],[Int]) -> [(Int,Int)]
+toTuples ([],[]) = []
+toTuples ((x:xs), (y:ys)) = (x,y) : toTuples (xs,ys)
 
 sortLsts :: ([Int], [Int]) -> ([Int], [Int])
 sortLsts (xs,ys) = (sort xs, sort ys)
