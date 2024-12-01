@@ -59,10 +59,11 @@ Calculate a total similarity score by
 imparative: foreach x in xs, 
 -}
 --dayOnePartTwo :: [Char] -> Int
+dayOnePartTwo :: [Char] -> Int
 dayOnePartTwo fileContent =
   let (lst1,lst2) = lstTuple
   in sum $ map (\x -> length (filter (==x) lst2) * x) lst1
   where
     lstTuple = splLst (words fileContent)
-    countInLst x [] acc = acc
+    countInLst _ [] acc = acc
     countInLst x (y:ys) acc = if y==x then countInLst x ys (acc+1) else countInLst x ys acc
