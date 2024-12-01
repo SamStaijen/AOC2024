@@ -22,7 +22,6 @@ import Data.List
 -}
 -- builtin sort method, haskell loves its math :) 
 -- https://hackage.haskell.org/package/base-4.20.0.1/docs/Data-List.html#v:sort
--- Pure function to process file content
 
 -- assumptions:
 -- there are an equal amount of numbers in list one and 2
@@ -30,7 +29,7 @@ import Data.List
 
 --methods will not be made properly, just functioning einough given the assumptions
 dayOnePartOne :: [Char] -> Int
-dayOnePartOne fileContent = sum (map delta $ toTuples (sortLsts (splLst (words fileContent))))
+dayOnePartOne fileContent = sum $ map delta $ toTuples $ sortLsts $ splLst $ words fileContent
 
 --splits [a,b,c,d] -> ([a,c],[b,d])
 splLst :: [String] -> ([Int],[Int])
