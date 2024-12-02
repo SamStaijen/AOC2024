@@ -8,5 +8,5 @@
 
 ## Leaderboards:
 I will attent 2 private leaderboards;
-- One from my current job
-- One from [Sticky](https://svsticky.nl/) the study association I am currently a member fo
+- One from my current job.
+- One from [Sticky](https://svsticky.nl/), the study association I am currently a member of.
