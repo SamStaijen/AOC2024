@@ -38,7 +38,7 @@ dayThreePartTwo fileContent =
     func (val,_) Disable  = (val,False)
     theAcc :: (Int, Bool)
     theAcc = (0, True)
-  in traceShow tokens $ fst (foldl func theAcc tokens)
+  in fst (foldl func theAcc tokens)
 
 
 -- Data type for tokens
