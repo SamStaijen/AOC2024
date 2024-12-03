@@ -1,9 +1,11 @@
 module DayThree where
 
+{-# LANGUAGE ScopedTypeVariables #-}
 import DayOne ()
 import DayTwo ()
-import Text.Regex.TDFA (getAllTextMatches, (=~), AllTextMatches)
+import Text.Regex.Posix ((=~))
 import Debug.Trace
+import Data.List
 
 {-
 mul (num,num) = multiply 
@@ -13,9 +15,9 @@ mul(2,4) mul(5,5)m mul(5,5), mul(8,5)
 idea: grep input based on the following regex : mul\(\d+,\d+\) (take everything that is a valid mul with digit length one or more). After that, parse the digits out of there
 -}
 dayThreePartOne :: [Char] -> Int
-dayThreePartOne fileContent = 
+dayThreePartOne fileContent =
   let
-    numTuples =trace (regex) $ extractNumbers fileContent
+    numTuples = extractNumbers fileContent
   in foldr (\(a,b) acc -> acc+(a*b)) 0 numTuples
 
 extractNumbers :: String -> [(Int, Int)]
@@ -26,6 +28,42 @@ extractNumbers input =
     matches = input =~ regex :: [[String]]
   in map (\match -> (read (match !! 1), read (match !! 2))) matches
 
---idea: parse to 'tokens', which are either mul, or en/disable. Tokens have type (String, Bool) where bool is enableState. Later pattern match on "enable()" _, pr "disable()" _ or on the regex with state True. if enable or disable is found, map over the rest of the list (I want it to be a recursive funtion)
+--answer before refractor: 79845780
 dayThreePartTwo :: [Char] -> Int
-dayThreePartTwo fileContent = undefined
+dayThreePartTwo fileContent =
+  let
+    tokens = extractThingies fileContent
+    func (val,state) (Mul (a,b)) = if state then (val+(a*b),state) else (val,state)
+    func (val,_) Enable  = (val,True)
+    func (val,_) Disable  = (val,False)
+    theAcc :: (Int, Bool)
+    theAcc = (0, True)
+  in traceShow tokens $ fst (foldl func theAcc tokens)
+
+
+-- Data type for tokens
+data Token = Mul (Int, Int) | Enable | Disable
+    deriving (Show, Eq)
+
+extractThingies :: String -> [Token]
+extractThingies input =
+  let
+    -- Define regex patterns
+    regex = "mul\\(([0-9]+),([0-9]+)\\)|do\\(\\)|don't\\(\\)"
+
+    -- Extract matches for each pattern
+    extractMatches :: String -> String -> [[String]]
+    extractMatches inp regex = inp =~ regex
+
+    -- Convert matches to Tokens
+    parse :: [String] -> Token
+    parse [match, c1, c2]
+      | isPrefixOf "mul" match = Mul (read (c1), read (c2))
+      | isPrefixOf "don" match = Disable
+      | isPrefixOf "do" match = Enable
+      | otherwise = error "whoopsie"
+
+    -- Collect all tokens from all patterns
+    tokens = map parse (extractMatches input regex)
+
+  in tokens

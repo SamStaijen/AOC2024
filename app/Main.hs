@@ -15,6 +15,7 @@ main = do
   --let processedContent = dayOnePartTwo fileContentDayOne
   --let processedContent = dayTwoPartOne fileContentDayTwo
   --let processedContent = dayTwoPartTwo fileContentDayTwo
-  let processedContent = dayThreePartOne fileContentDayThree
+  --let processedContent = dayThreePartOne fileContentDayThree
+  let processedContent = dayThreePartTwo fileContentDayThree
   -- Print the result
   print processedContent
