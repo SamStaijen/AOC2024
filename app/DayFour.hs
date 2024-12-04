@@ -44,3 +44,33 @@ getDiagonals arr = DL.map extractDiagonal allDiagonalStarts
     extractDiagonal (r, c) =
       [arr !! (r + d) !! (c + d) | d <- [0 .. min (rows - r - 1) (cols - c - 1)]]
 
+--idea: foreach a, take 3x3 grid around it
+dayFourPartTwo :: [Char] -> Int
+dayFourPartTwo fileContent =
+  let
+    a3x3 = takeThreeByThree (DL.map DT.unpack $ split (=='\n') $ pack fileContent)
+    listOfTrue = DL.filter id $ DL.map followsXRules a3x3
+  in traceShow (listOfTrue) $DL.length listOfTrue
+
+followsXRules :: [[Char]] -> Bool
+followsXRules strs = DL.concat strs =~ regex
+  where
+    regex = "M.M.A.S.S|S.S.A.M.M|S.M.A.S.M|M.S.A.M.S"
+
+
+takeThreeByThree :: [String] -> [[String]]
+takeThreeByThree strs =
+    let
+        -- Get dimensions of the grid
+        rows = DL.length strs
+        cols = if DL.null strs then 0 else DL.length (DL.head strs)
+
+        -- Find coordinates of all 'A's that are not at the edges
+        findAs :: [(Int, Int)]
+        findAs = [(i, j) | i <- [1..rows-2], j <- [1..cols-2], (strs !! i !! j) == 'A']
+
+        -- Extract a 3x3 grid centered at (i, j)
+        extractGrid :: (Int, Int) -> [String]
+        extractGrid (i, j) = DL.map (DL.take 3 . DL.drop (j-1)) (DL.take 3 $ DL.drop (i-1) strs)
+    in
+        DL.map extractGrid findAs
