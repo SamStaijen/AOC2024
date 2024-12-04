@@ -61,12 +61,12 @@ executable AOC2024
     main-is:          Main.hs
 
     -- Modules included in this executable, other than Main.
-    other-modules: DayOne, DayTwo, DayThree
+    other-modules: DayOne, DayTwo, DayThree, DayFour
     -- LANGUAGE extensions used by modules in this package.
     -- other-extensions:
 
     -- Other library packages from which modules are imported.
-    build-depends:    base ^>=4.17.2.1, split, regex-tdfa, parsec, regex-posix
+    build-depends:    base ^>=4.17.2.1, split, regex-tdfa, parsec, regex-posix, text
 
     -- Directories containing source files.
     hs-source-dirs:   app
