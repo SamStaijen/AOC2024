@@ -26,24 +26,21 @@ answer is four
 dayFivePartOne :: [Char] -> Int
 dayFivePartOne fileContent =
   let
-    x = DL.map DT.unpack $ split (=='\n') $ pack fileContent
-    (rules, pagesPlusEmpty) = DL.break (== "") x
-    pages = DL.drop 1 pagesPlusEmpty
-    rulesToTuples' = DL.map rulesToTuples rules
-    pagesToArrays :: [[Int]]
-    pagesToArrays = DL.map stringToIntList pages
-    legalPages = DL.filter (\pgs -> not $ mapInPrevious [] pgs rulesToTuples') pagesToArrays
+    (rules, pagesPlusEmpty) = DL.break (== "") $ DL.map DT.unpack $ split (=='\n') $ pack fileContent
+    legalPages = DL.filter 
+                (\pgs -> not $ mapInPrevious [] pgs (DL.map rulesToTuples rules)) 
+                (DL.map stringToIntList (DL.drop 1 pagesPlusEmpty))
     getMiddlenum lst = lst !! (DL.length lst `div` 2)
     sumMiddleNum = DL.foldr ((+) . getMiddlenum) 0 legalPages
   in sumMiddleNum
 
 rulesToTuples :: String -> (Int, Int)
 rulesToTuples str =
-    let regex = "([0-9]+)\\|([0-9]+)" -- Regex to match numbers separated by a pipe
-        match = str =~ regex :: [[String]] -- Perform the regex match
+    let regex = "([0-9]+)\\|([0-9]+)"
+        match = str =~ regex :: [[String]] 
     in case match of
-        [[_, num1, num2]] -> (read num1, read num2) -- Convert captured strings to integers
-        _ -> error $ "Invalid format: " ++ str -- Handle unexpected input format
+        [[_, num1, num2]] -> (read num1, read num2)
+        _ -> error $ "Invalid format: " ++ str
 
 stringToIntList :: String -> [Int]
 stringToIntList str =
