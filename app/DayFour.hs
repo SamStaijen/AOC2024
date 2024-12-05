@@ -1,6 +1,5 @@
-module DayFour where
-
 {-# LANGUAGE ScopedTypeVariables #-}
+module DayFour where
 import DayOne ()
 import DayTwo ()
 import DayThree ()

@@ -1,6 +1,5 @@
-module DayThree where
-
 {-# LANGUAGE ScopedTypeVariables #-}
+module DayThree where
 import DayOne ()
 import DayTwo ()
 import Text.Regex.Posix ((=~))
