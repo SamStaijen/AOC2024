@@ -7,6 +7,8 @@ import DayFour
 import DayFive
 import DaySix
 import DaySeven
+import DayEight
+
 
 main :: IO ()
 main = do
@@ -18,7 +20,7 @@ main = do
   fileContentDayFive <- readFile "app/inputs/dayFive.txt"
   fileContentDaySix <- readFile "app/inputs/daySix.txt"
   fileContentDaySeven <- readFile "app/inputs/daySeven.txt"
-
+  fileContentDayEight <- readFile "app/inputs/dayEight.txt"
   -- Process the file content purely
   --let processedContent = dayOnePartOne fileContentDayOne
   --let processedContent = dayOnePartTwo fileContentDayOne
@@ -31,7 +33,7 @@ main = do
   --let processedContent = dayFivePartOne fileContentDayFive
   --let processedContent = dayFivePartTwo fileContentDayFive
   --let processedContent = daySixPartOne fileContentDaySix
-  let processedContent = daySevenPartOne fileContentDaySeven
-
+  --let processedContent = daySevenPartOne fileContentDaySeven
+  let processedContent = dayEightPartOne fileContentDayEight
   -- Print the result
   print processedContent
